@@ -2,32 +2,44 @@
 
 This runs [http://www.iobroker.net] in a docker container.
 Tested on standard x86 hardware. All existing projects that I found where not working anymore or targeting RaspberryPi or specific NAS systems. 
+
 This container should run on a standard (Docker) Unix system.
 
 ### Installation
 
-- Download repository
+- Download repository (or download files manually)
+```sh
+$ git clone https://github.com/allofmex/docker-iobroker.git
+$ cd docker-iobroker
+```
+
 - Edit docker-compose.yml
+```sh
+nano docker-compose.yml
+```
 
-Make sure you adjust the volume entries. 
-Note: it may be sufficient to keep only /opt/iobroker/iobroker-data folder outside of your container. Not sure...
+Make sure you adjust "volumes:" section to your needs. The host directory will hold all iobroker files outside of container.
 
-### Setup
+**Note:** it may be sufficient to keep only /opt/iobroker/iobroker-data folder outside of your container. Not sure...
+
+### First Setup
 
 Only needed on first run:
-This will download and set-up ioBroker
+This will download and install ioBroker
 ```sh
 $ docker-compose run service /setup_broker.sh
 
 ```
-Optional: But you should run this step here too to update admin adapter. (Other adapter can be updated later in ioBroker)
+After this command, your hosts directory should contain multiple new files.
+
+**Optional:** But you should run this step here too to update admin adapter. We can not do this within web interface, because it would stop admin interface, what in turn would stop our container. (Other adapter can be updated later in ioBroker)
 
 ```sh
 $ docker-compose run  service /bin/bash /opt/iobroker/iobroker upgrade admin
-
 ```
 
-No we start ioBroker
+### Startup ioBroker container
+Now we start ioBroker
 ```sh
 $ docker-compose up
 
@@ -55,7 +67,7 @@ service_1  | Change log subscriber state: true
 
 ```
 
-Now login to ioBroker via browser
+Login to ioBroker via browser
 [http://YOUR-IP:9181/]
 
 Go to tab Adapters and add adapter "Visualisation".
@@ -63,25 +75,31 @@ Go to tab Adapters and add adapter "Visualisation".
 Go to [http://YOUR-IP:9182/]
 Here you find the visualisation(Editor) page to create your own ioBroker interface.
 
-If all is fine, you may run you container with
+If all is fine, you may run you container next time with
 ```sh
 $ docker-compose up -d
 ```
 to keep it running.
 
 ### Debugging
-Login to container
+In case of problems, you can login to container by
 ```sh
-$ docker exec -it iobroker2_service_1 bash
+$ docker exec -it dockeriobroker_service_1 bash
 ```
 
-This instructions may help
+This instructions may help: 
+[http://www.iobroker.net/docu/?page_id=3928]
 
-[http://www.iobroker.net/docu/?page_id=3928&lang=de]
+Especially
+```sh
+netstat -n -a -p TCP
+```
+was very helpfull for me...
+To use netstat, you may need first
 ```sh
  apt-get install net-tools
 ```
-
+Node versions seem to be tricky too.
 
 
 License
