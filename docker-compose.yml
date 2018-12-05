@@ -1,0 +1,16 @@
+version: "3"
+services:
+  service:
+    build: .
+    ports:
+      - 9181:8081
+      - 9182:8082
+      - 9183:8083
+      - 9184:8084
+        # for MQTT adapter
+      - 1883:1883
+    volumes:
+      - /mnt/local_ssdstorage_1/docker_data/iobroker/:/opt/iobroker/
+    networks:
+        - default
+
