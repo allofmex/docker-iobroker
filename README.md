@@ -18,6 +18,11 @@ $ cd docker-iobroker
 nano docker-compose.yml
 ```
 
+- You may also adjust timezone in Dockerfile if needed
+```sh
+nano Dockerfile
+```
+
 Make sure you adjust "volumes:" section to your needs. The host directory will hold all iobroker files outside of container.
 
 **Note:** it may be sufficient to keep only /opt/iobroker/iobroker-data folder outside of your container. Not sure...

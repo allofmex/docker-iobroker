@@ -4,6 +4,10 @@ MAINTAINER Allofmex <allofmex@web.de>
 
 #RUN apt-get update
 
+# Adjust timezone if needed
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ /etc/timezone
+
 RUN mkdir /opt/iobroker
 RUN chmod 777 /opt/iobroker
 RUN cd /opt/iobroker && npm install iobroker --unsafe-perm
