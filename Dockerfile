@@ -10,12 +10,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ /etc/timezone
 
 RUN mkdir /opt/iobroker
 RUN chmod 777 /opt/iobroker
-RUN cd /opt/iobroker && npm install iobroker --unsafe-perm
-RUN cd /opt/iobroker && npm i --production --unsafe-perm
 
 ADD run_broker.sh /run_broker.sh
 ADD setup_broker.sh /setup_broker.sh
 RUN chmod +x /run_broker.sh /setup_broker.sh
+
+RUN useradd -m iobroker && echo "iobroker:iobroker" | chpasswd && adduser iobroker sudo
 
 WORKDIR /opt/iobroker/
 

@@ -87,7 +87,13 @@ $ docker-compose up -d
 to keep it running.
 
 ### Debugging
-In case of problems, you can login to container by
+Sometimes, adding an adapter does not work, it stucks at "./iobroker add adaptername  --host...". Try
+```sh
+$ docker-compose run  service /bin/bash /opt/iobroker/iobroker add adaptername
+```
+Then add in admin again.
+
+In case of other problems, you may login to container by
 ```sh
 $ docker exec -it dockeriobroker_service_1 bash
 ```
