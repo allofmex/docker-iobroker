@@ -8,6 +8,12 @@ services:
       - 8083:8083
       - 8084:8084
         # 1883 for MQTT adapter (if needed)
-      - 1883:1883
+#      - 1883:1883
     volumes:
       - /hostdir/iobroker/:/opt/iobroker/
+#   devices:
+#      # cc2531 usb adapter (zigbee,...)
+#      - /dev/ttyACM0:/dev/ttyACM0
+    networks:
+        # needed that container binds to host ports
+        - default
