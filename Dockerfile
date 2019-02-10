@@ -15,7 +15,8 @@ ADD run_broker.sh /run_broker.sh
 ADD setup_broker.sh /setup_broker.sh
 RUN chmod +x /run_broker.sh /setup_broker.sh
 
-RUN useradd -m iobroker && echo "iobroker:iobroker" | chpasswd && adduser iobroker sudo
+# add iobroker user, group dialout needed for serial device access (cc2531/zigbee...)
+RUN useradd -m iobroker && echo "iobroker:iobroker" | chpasswd && adduser iobroker sudo && adduser iobroker dialout
 
 WORKDIR /opt/iobroker/
 
